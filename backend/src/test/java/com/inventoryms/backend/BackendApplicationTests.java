@@ -1,10 +1,10 @@
-package com.spring.inventoryms.bt_ims;
+package com.inventoryms.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BtImsApplicationTests {
+class BackendApplicationTests {
 
 	@Test
 	void contextLoads() {

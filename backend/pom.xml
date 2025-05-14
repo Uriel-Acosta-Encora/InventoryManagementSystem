@@ -8,11 +8,11 @@
 		<version>3.4.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.spring.inventoryms</groupId>
-	<artifactId>bt_ims</artifactId>
+	<groupId>com.inventoryms</groupId>
+	<artifactId>backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>bt_ims</name>
-	<description>Demo project for Spring Boot</description>
+	<name>backend</name>
+	<description>Inventory Management System</description>
 	<url/>
 	<licenses>
 		<license/>
