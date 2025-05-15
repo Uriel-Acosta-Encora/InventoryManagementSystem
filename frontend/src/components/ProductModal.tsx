@@ -13,7 +13,6 @@ interface ProductModalProps {
 const ProductModal: React.FC<ProductModalProps> = ({isOpen, onClose, onSave}) =>{
     // Default product state
     const [product, setProduct] = React.useState<Product>({
-        id: 0,
         name: "",
         category: "",
         stock: 0,
@@ -70,7 +69,6 @@ const ProductModal: React.FC<ProductModalProps> = ({isOpen, onClose, onSave}) =>
     };
     const resetProduct = () => {
         setProduct({
-            id: 0,
             name: '',
             category: '',
             stock: 0,
