@@ -1,35 +1,62 @@
 package com.inventoryms.services;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Service; // Set as a Service
 
-import com.inventoryms.models.Product;
+import com.inventoryms.models.Product; // Import Product Model
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter; // Import DateTimeFormatter
 
-@Service
+@Service // To instance the class as a Service
 public class ProductService {
+    // Dummy list of products, in memory storage
     private final List<Product> products = new ArrayList<>();
+    private int nextId = 6; // Next ID for new products
 
     public ProductService(){
         // Dummy data
-        products.add(new Product(1,"Pan", "Alimentos", 20, 1.5, "2025-06-01"));
-        products.add(new Product(2, "Jabon", "Limpieza", 15, 3.99, "N/A"));
-        products.add(new Product(3, "Detergente", "Limpieza", 10, 5.99, "2024-12-31"));
-        products.add(new Product(4, "Leche", "Alimentos", 30, 0.99, "2023-10-15"));
-        products.add(new Product(5, "MacBook", "Tecnologia", 5, 1200, "N/A"));
+        products.add(new Product(1,"Pan", "Alimentos", 20, 1.5, "2025-06-01", "2025-05-16", "2025-05-16"));
+        products.add(new Product(2, "Jabon", "Limpieza", 15, 3.99, "N/A", "2025-05-16", "2025-05-16"));
+        products.add(new Product(3, "Detergente", "Limpieza", 10, 5.99, "2024-12-31", "2025-05-16", "2025-05-16"));
+        products.add(new Product(4, "Leche", "Alimentos", 30, 0.99, "2023-10-15", "2025-05-16", "2025-05-16"));
+        products.add(new Product(5, "MacBook", "Tecnologia", 5, 1200, "N/A", "2025-05-16", "2025-05-16"));
     }
 
-    public List<Product> getAllProducts(){
-        return Collections.unmodifiableList(products);
+    public List<Product> getAllProducts(){ // Return all elements in the list
+        return Collections.unmodifiableList(products); // Prevent modification of the list
     }
 
     public Product addProduct(Product product){
+        product.setId(nextId++); // Set the ID of the new product
         if(product.getExpirationDate() == null || product.getExpirationDate().trim().isEmpty()){
             product.setExpirationDate("N/A");
         }
-        products.add(product);
-        return product;
+        String now = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
+        if(product.getCreationDate() == null || product.getCreationDate().trim().isEmpty()){
+            product.setCreationDate(now);
+        }
+        product.setLastUpdateDate(now); // Set last update date to now
+        products.add(product); // Add product to the list
+        return product; // Return only the addded product
+    }
+
+    public Product updateProduct(int id, Product updatedProduct){
+        for (int i=0; i<products.size(); i++){
+            if(products.get(i).getId() == id){
+                updatedProduct.setId(id); // Set the ID of the updated product
+                updatedProduct.setCreationDate(products.get(i).getCreationDate()); // Keep the original creation date
+                updatedProduct.setLastUpdateDate(LocalDate.now().format(DateTimeFormatter.ISO_DATE)); // Set last update date to now
+                products.set(i, updatedProduct); // Update the product in the list
+                return updatedProduct; // Return the updated product
+            }
+        }
+        return null; // Return null if the product was not found
+    }
+
+    public void deleteProduct(int id){ // Delete product by ID
+        products.removeIf(product -> product.getId() == id); // Remove the product from the list
     }
 }

@@ -1,5 +1,5 @@
 package com.inventoryms.models;
-
+// Models = Pydantic Models
 public class Product {
     // Base Attributes
     private int id;
@@ -8,16 +8,29 @@ public class Product {
     private int stock;
     private double price;
     private String expirationDate;
+    private String creationDate;
+    private String lastUpdateDate;
 
     public Product(){} // Void constructor for Spring Boot
 
-    public Product(int id, String name, String category, int stock, double price, String expirationDate){
+    public Product(
+        int id, 
+        String name, 
+        String category, 
+        int stock, 
+        double price, 
+        String expirationDate, 
+        String creationDate,
+        String lastUpdateDate
+        ){
         this.id = id;
         this.name = name;
         this.category = category;
         this.stock = stock;
         this.price = price;
         this.expirationDate = expirationDate;
+        this.creationDate = creationDate;
+        this.lastUpdateDate = lastUpdateDate;
     }
 
     // Getters and Setters
@@ -38,6 +51,12 @@ public class Product {
 
     public String getExpirationDate() {return expirationDate;}
     public void setExpirationDate(String expirationDate) {this.expirationDate = expirationDate;}
+
+    public String getCreationDate() {return creationDate;}
+    public void setCreationDate(String creationDate) {this.creationDate = creationDate;}
+
+    public String getLastUpdateDate() {return lastUpdateDate;}
+    public void setLastUpdateDate(String lastUpdateDate) {this.lastUpdateDate = lastUpdateDate;}
 
 
 }
