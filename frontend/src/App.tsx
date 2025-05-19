@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import ProductModal from './components/ProductModal';
 import { Product } from './models/Product';
+import ProductFilter from './components/ProductFilter';
 
 const App: React.FC = () => { // Main component of the application
   const [
@@ -67,41 +68,16 @@ const App: React.FC = () => { // Main component of the application
   return (
     <div className="App">
       <h1>Inventory Management System</h1>
-      <div>
-        <input type="text"
-        placeholder="Name"
-        value={filters.name}
-        onChange={e => setFilters(f => ({...f, name:e.target.value}))}
-        />
-        <select multiple
-        value={filters.categories}
-        onChange={e=> {
-          const options = Array.from(e.target.selectedOptions).map(opt => opt.value);
-          setFilters(f => ({...f, categories: options}));
+      <ProductFilter
+        filters={filters}
+        categories={categories}
+        onChange={setFilters}
+        onSearch={() => setAppliedFilters({ ...filters })}
+        onClear={() => {
+          setFilters(initialFilters);
+          setAppliedFilters(initialFilters);
         }}
-        >
-          {categories.map(cat => (
-            <option key={cat} value={cat}>{cat}</option>
-          ))}
-        </select>
-        <select
-          value={filters.stock}
-          onChange={e => setFilters(f => ({...f, stock: e.target.value}))}
-        >
-          <option value="">All</option>
-          <option value="in">In Stock</option>
-          <option value="out">Out of Stock</option>
-        </select>
-        <button onClick={()=> setAppliedFilters({...filters})}>Search</button>
-        <button
-          onClick={() => {
-            setFilters(initialFilters);
-            setAppliedFilters(initialFilters);
-          }}
-        >
-          Clear
-        </button>
-      </div>
+      />
       <button onClick={() => setIsModalOpen(true)}>Add Product</button>
       <ProductModal
         isOpen={isModalOpen}
@@ -120,9 +96,9 @@ const App: React.FC = () => { // Main component of the application
           const noFilters = !appliedFilters.name && (!appliedFilters.categories || appliedFilters.categories.length === 0) && !appliedFilters.stock;
           if (noFilters) return true;
           
-          const matchesName = product.name.toLowerCase().includes(appliedFilters.name.toLowerCase());
-          const matchesCategory = !appliedFilters.categories || appliedFilters.categories.length === 0 || appliedFilters.categories.includes(product.category);
-          let matchesStock = false;
+          const matchesName = appliedFilters.name ? product.name.toLowerCase().includes(appliedFilters.name.toLowerCase()) : true;
+          const matchesCategory = appliedFilters.categories && appliedFilters.categories.length > 0 ? appliedFilters.categories.includes(product.category) : true;
+          let matchesStock = true;
           if (appliedFilters.stock === "in") {
             matchesStock = product.stock > 0;
           } else if (appliedFilters.stock === "out") {
