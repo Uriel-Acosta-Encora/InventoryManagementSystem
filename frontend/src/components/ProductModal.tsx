@@ -7,11 +7,12 @@ interface ProductModalProps {
     isOpen: boolean;
     onClose: () => void;
     onSave: (product: Product) => void;
+    product: Product | null;
 }
 
 // Component for the ProductModal
 const ProductModal: React.FC<ProductModalProps> = ({isOpen, onClose, onSave}) =>{
-    // Default product state
+    // Initial product state
     const [product, setProduct] = React.useState<Product>({
         name: "",
         category: "",
@@ -25,7 +26,7 @@ const ProductModal: React.FC<ProductModalProps> = ({isOpen, onClose, onSave}) =>
         const newErrors: {[key: string]: string} = {};
         if (!product.name.trim()) newErrors.name = "Name is required";
         if (!product.category.trim()) newErrors.category = "Category is required";
-        if (product.stock < 0 ) newErrors.stock = "Stock can not be negative";
+        if (product.stock < 0 ) newErrors.stock = "Stock can not be negative" ;
         if (product.price < 0) newErrors.price = "Price can not be negative";
 
         setErrors(newErrors);
@@ -44,8 +45,8 @@ const ProductModal: React.FC<ProductModalProps> = ({isOpen, onClose, onSave}) =>
                 break;
         }
         setProduct((prev) => ({
-            ...prev,
-            [name] : parsedValue
+            ...prev, // preserve previous state, made a copy
+            [name] : parsedValue // mod the specific field of the copied state :O
         }));
         setErrors((prev) => ({
             ...prev,
