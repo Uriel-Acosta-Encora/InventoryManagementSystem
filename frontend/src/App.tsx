@@ -116,8 +116,10 @@ const App: React.FC = () => { // Main component of the application
       <ul>
         {products
         .filter(product =>{
-
-          const noFilters = !appliedFilters.name
+          // When seartch filters are empty, show all products
+          const noFilters = !appliedFilters.name && (!appliedFilters.categories || appliedFilters.categories.length === 0) && !appliedFilters.stock;
+          if (noFilters) return true;
+          
           const matchesName = product.name.toLowerCase().includes(appliedFilters.name.toLowerCase());
           const matchesCategory = !appliedFilters.categories || appliedFilters.categories.length === 0 || appliedFilters.categories.includes(product.category);
           let matchesStock = false;
