@@ -23,6 +23,16 @@ public class ProductService {
         products.add(new Product(3, "Detergente", "Limpieza", 10, 5.99, "2024-12-31", "2025-05-16", "2025-05-16"));
         products.add(new Product(4, "Leche", "Alimentos", 30, 0.99, "2023-10-15", "2025-05-16", "2025-05-16"));
         products.add(new Product(5, "MacBook", "Tecnologia", 5, 1200, "N/A", "2025-05-16", "2025-05-16"));
+        products.add(new Product(6, "Monitor", "Tecnologia", 8, 300, "N/A", "2025-05-16", "2025-05-16"));
+        products.add(new Product(7, "Mouse", "Tecnologia", 12, 20, "N/A", "2025-05-16", "2025-05-16"));
+        products.add(new Product(8, "Leche", "Alimentos", 30, 0.99, "2023-10-15", "2025-05-16", "2025-05-16"));
+        products.add(new Product(9, "Aguacate", "Alimentos", 20, 1.5, "2025-06-01", "2025-05-16", "2025-05-16"));
+        products.add(new Product(10, "Cloro", "Limpieza", 15, 5.99, "N/A", "2025-05-16", "2025-05-16"));
+        products.add(new Product(11, "Detergente", "Limpieza", 10, 5.99, "2024-12-31", "2025-05-16", "2025-05-16"));
+        products.add(new Product(12, "Cobija", "Blancos", 5, 25.99, "N/A", "2025-05-16", "2025-05-16"));
+        products.add(new Product(13, "Silla", "Muebles", 2, 150.99, "N/A", "2025-05-16", "2025-05-16"));
+        products.add(new Product(14, "Mesa", "Muebles", 2, 250.99, "N/A", "2025-05-16", "2025-05-16"));
+        products.add(new Product(15, "Cama", "Muebles", 2, 500.99, "N/A", "2025-05-16", "2025-05-16"));
     }
 
     public List<Product> getAllProducts(){ // Return all elements in the list
