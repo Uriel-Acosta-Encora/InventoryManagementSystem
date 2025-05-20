@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import ProductModal from './components/ProductModal';
 import { Product } from './models/Product';
 import ProductFilter from './components/ProductFilter';
+import ProductList from './components/ProductPagination';
 
 const App: React.FC = () => { // Main component of the application
   const [
@@ -61,9 +62,6 @@ const App: React.FC = () => { // Main component of the application
   const [filters, setFilters] = useState(initialFilters);
   const [appliedFilters, setAppliedFilters] = useState(initialFilters);
   const categories = Array.from(new Set(products.map(p => p.category)));
-
-  
-  
   
   return (
     <div className="App">
@@ -88,32 +86,13 @@ const App: React.FC = () => { // Main component of the application
         onSave={handleSaveProduct}
         product={editingProduct} // Pass the product to be edited
       />
-      <h2>Lista Provicional</h2>
-      <ul>
-        {products
-        .filter(product =>{
-          // When seartch filters are empty, show all products
-          const noFilters = !appliedFilters.name && (!appliedFilters.categories || appliedFilters.categories.length === 0) && !appliedFilters.stock;
-          if (noFilters) return true;
-          
-          const matchesName = appliedFilters.name ? product.name.toLowerCase().includes(appliedFilters.name.toLowerCase()) : true;
-          const matchesCategory = appliedFilters.categories && appliedFilters.categories.length > 0 ? appliedFilters.categories.includes(product.category) : true;
-          let matchesStock = true;
-          if (appliedFilters.stock === "in") {
-            matchesStock = product.stock > 0;
-          } else if (appliedFilters.stock === "out") {
-              matchesStock = product.stock === 0;
-          }
-          return matchesName && matchesCategory && matchesStock;
-        })
-        .map((product) => (
-          <li key={product.id}>
-            {product.name} - {product.category} - {product.stock} - {product.price} - {product.expirationDate}
-            <button onClick={() => handleEditProduct(product)}>Edit</button>
-            <button onClick={() => handleDeleteProduct(product.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      <h2>Product List</h2>
+      <ProductList
+        products={products}
+        appliedFilters={appliedFilters}
+        onEdit={handleEditProduct}
+        onDelete={handleDeleteProduct}
+      />
     </div>
   )
 };
