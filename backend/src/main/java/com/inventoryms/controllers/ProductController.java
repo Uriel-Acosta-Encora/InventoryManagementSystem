@@ -7,10 +7,6 @@ import com.inventoryms.services.ProductService;
 import com.inventoryms.models.Product;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-
 
 @RestController // Handle HTTP requests to return JSON
 @RequestMapping("/products") // Endoint for ProductController
@@ -40,19 +36,19 @@ public class ProductController {
         productService.deleteProduct(id); // Call the service method to delete the product
     }
 
-    @PostMapping("/{id}/outofstock")
+    @PostMapping("/{id}/outofstock") // POST request to set a product as out of stock
     public Product setOutOfStockProduct(@PathVariable int id) {
         Product product = productService.getAllProducts().stream().
-        filter(p -> p.getId() == id).findFirst().orElse(null);
+        filter(p -> p.getId() == id).findFirst().orElse(null); // Find the product by ID
         
-        if (product != null){
+        if (product != null){ // Check if the product exists
             product.setStock(0);
             productService.updateProduct(id, product);
         }
-        return product;
+        return product; // Return the updated product
     }
 
-    @PutMapping("/{id}/instock")
+    @PutMapping("/{id}/instock") // PUT request to restore stock of a product
     public Product restoreStock(@PathVariable int id) {
         Product product = productService.getAllProducts().stream().
         filter(p -> p.getId() == id).findFirst().orElse(null);
