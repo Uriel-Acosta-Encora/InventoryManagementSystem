@@ -7,6 +7,9 @@ import com.inventoryms.services.ProductService;
 import com.inventoryms.models.Product;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @RestController // Handle HTTP requests to return JSON
@@ -36,4 +39,29 @@ public class ProductController {
     public void deleteProduct(@PathVariable int id) { // Path variable to get the ID
         productService.deleteProduct(id); // Call the service method to delete the product
     }
+
+    @PostMapping("/{id}/outofstock")
+    public Product setOutOfStockProduct(@PathVariable int id) {
+        Product product = productService.getAllProducts().stream().
+        filter(p -> p.getId() == id).findFirst().orElse(null);
+        
+        if (product != null){
+            product.setStock(0);
+            productService.updateProduct(id, product);
+        }
+        return product;
+    }
+
+    @PutMapping("/{id}/instock")
+    public Product restoreStock(@PathVariable int id) {
+        Product product = productService.getAllProducts().stream().
+        filter(p -> p.getId() == id).findFirst().orElse(null);
+        
+        if (product != null){
+            product.setStock(10);
+            productService.updateProduct(id, product);
+        }
+        return product;
+    }
+    
 }

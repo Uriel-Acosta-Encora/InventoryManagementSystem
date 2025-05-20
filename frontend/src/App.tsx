@@ -92,6 +92,7 @@ const App: React.FC = () => { // Main component of the application
         appliedFilters={appliedFilters}
         onEdit={handleEditProduct}
         onDelete={handleDeleteProduct}
+        onRefresh={fetchProducts}
       />
     </div>
   )
