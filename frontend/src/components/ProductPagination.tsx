@@ -10,11 +10,12 @@ interface ProductListProps {
   };
   onEdit: (product: Product) => void;
   onDelete: (id?: number) => void;
+  onRefresh: () => void;
 }
 // Number of items per page
 const itemsPerPage = 10;
 
-const ProductList: React.FC<ProductListProps> = ({ products, appliedFilters, onEdit, onDelete }) => {
+const ProductList: React.FC<ProductListProps> = ({ products, appliedFilters, onEdit, onDelete, onRefresh }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   // filter products based on applied filters
@@ -51,6 +52,26 @@ const ProductList: React.FC<ProductListProps> = ({ products, appliedFilters, onE
       <ul>
         {paginatedProducts.map((product) => (
           <li key={product.id}>
+            <input type="checkbox" 
+            onChange={() => {
+                if (product.stock > 0){
+                    // Set stock to 0
+                    fetch(`http://localhost:9090/products/${product.id}/outofstock`, {
+                    method: "POST",
+                    })
+                    .then(() => onRefresh())
+                    .catch((error) => console.error('Error al poner en out of stock:', error));
+                } else{
+                    // Set stock to 10
+                    fetch(`http://localhost:9090/products/${product.id}/instock`, {
+                    method: "PUT",
+                    })
+                    .then(() => onRefresh())
+                    .catch((error) => console.error('Error al restaurar stock:', error));
+                }
+            }}
+            style={{ marginRight: 8 }}
+            />
             {product.name} - {product.category} - {product.stock} - {product.price} - {product.expirationDate}
             <button onClick={() => onEdit(product)}>Edit</button>
             <button onClick={() => onDelete(product.id)}>Delete</button>
