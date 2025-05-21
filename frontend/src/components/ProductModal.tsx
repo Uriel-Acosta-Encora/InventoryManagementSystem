@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Product } from "../models/Product";
 import "../styles/ProductModal.css";
 
@@ -10,16 +10,25 @@ interface ProductModalProps {
     product: Product | null;
 }
 
+const emptyProduct: Product = {
+    name: "",
+    category: "",
+    stock: 0,
+    price: 0,
+    expirationDate: ""
+}
+
 // Component for the ProductModal
-const ProductModal: React.FC<ProductModalProps> = ({isOpen, onClose, onSave}) =>{
-    // Initial product state
-    const [product, setProduct] = React.useState<Product>({
-        name: "",
-        category: "",
-        stock: 0,
-        price: 0,
-        expirationDate: ""
-    });
+const ProductModal: React.FC<ProductModalProps> = ({isOpen, onClose, onSave, product : productProp}) =>{
+    
+    const [product, setProduct] = useState<Product>(emptyProduct);
+    useEffect(() => {
+        if (productProp) {
+            setProduct(productProp);
+        } else {
+            setProduct(emptyProduct);
+        }
+    }, [productProp]);
 
     const [errors, setErrors] = useState<{[key: string]: string}>({});
     const validate = () => {
@@ -34,7 +43,7 @@ const ProductModal: React.FC<ProductModalProps> = ({isOpen, onClose, onSave}) =>
     };
     
     // Function to handle input changes
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const {name, value} = event.target;
         // Change value type of stock and price to number
         let parsedValue: number | string = value;
@@ -54,29 +63,26 @@ const ProductModal: React.FC<ProductModalProps> = ({isOpen, onClose, onSave}) =>
         }));
     };
 
-    const handleSubmit = ()=>{
+    const handleSubmit = (e: React.FormEvent)=>{
+        e.preventDefault();
         if (!validate()) return;
 
         const productToSave = {
+            ...productProp,
             ...product,
             expirationDate: product.expirationDate.trim() === "" ? "N/A" : product.expirationDate,
         };
         // Call onSave prop with the product state
         onSave(productToSave);
         // Clean the product state
-        resetProduct();
+        if (!productProp) {
+            resetProduct();
+        }
         // Close the modal
         onClose();
     };
     const resetProduct = () => {
-        setProduct({
-            name: '',
-            category: '',
-            stock: 0,
-            price: 0,
-            expirationDate: '',
-        });
-
+        setProduct(emptyProduct);
         setErrors({});
     };
     
@@ -87,31 +93,33 @@ const ProductModal: React.FC<ProductModalProps> = ({isOpen, onClose, onSave}) =>
         // Modal structure
         <div className="product-modal">
             <div className="modal-content">
-                <h2>Create / Edit Product</h2>
-                
-                <input name = "name" placeholder="Name" value={product.name} onChange={handleChange}/>
-                {errors.name && <span className="modal-error">{errors.name}</span>}
+                <h2>{productProp ? "Edit Product" : "Create Product"}</h2>
+                <form onSubmit={handleSubmit}>
 
-                <input name = "category" placeholder="Category" value={product.category} onChange={handleChange}/>
-                {errors.category && <span className="modal-error">{errors.category}</span>}
+                    <input name = "name" placeholder="Name" value={product.name} onChange={handleChange}/>
+                    {errors.name && <span className="modal-error">{errors.name}</span>}
 
-                <input type = "number" name = "stock" placeholder="Stock Units" value={product.stock} onChange={handleChange}/>
-                {errors.stock && <span className="modal-error">{errors.stock}</span>}
+                    <input name = "category" placeholder="Category" value={product.category} onChange={handleChange}/>
+                    {errors.category && <span className="modal-error">{errors.category}</span>}
 
-                <input type = "number" name = "price" placeholder="Price" value={product.price} onChange={handleChange}/>
-                {errors.price && <span className="modal-error">{errors.price}</span>}
+                    <input type = "number" name = "stock" placeholder="Stock Units" value={product.stock} onChange={handleChange}/>
+                    {errors.stock && <span className="modal-error">{errors.stock}</span>}
 
-                <input type = "date" name = "expirationDate" value={product.expirationDate} onChange={handleChange}/>
-                {errors.expirationDate && <span className="modal-error">{errors.expirationDate}</span>}
-                <div className="modal-actions">
-                    <button onClick={handleSubmit}>Save</button>
-                    <button onClick={() =>
-                        {
-                            resetProduct();
-                            onClose();
-                        }
-                    }>Cancel</button>
-                </div>
+                    <input type = "number" name = "price" placeholder="Price" value={product.price} onChange={handleChange}/>
+                    {errors.price && <span className="modal-error">{errors.price}</span>}
+
+                    <input type = "date" name = "expirationDate" value={product.expirationDate} onChange={handleChange}/>
+                    {errors.expirationDate && <span className="modal-error">{errors.expirationDate}</span>}
+                    <div className="modal-actions">
+                        <button type="submit" >Save</button>
+                        <button type="button" onClick={() =>
+                            {
+                                resetProduct();
+                                onClose();
+                            }
+                        }>Cancel</button>
+                    </div>
+                </form>
             </div>
         </div>
     );
