@@ -28,7 +28,7 @@ public class ProductController {
     @PutMapping("/{id}") // PUT request to update a product
     public Product updateProduct(@PathVariable int id, @RequestBody Product product) { // Path variable to get the ID
         product.setId(id); // Set the ID of the product to be updated
-        return productService.addProduct(product); // Call the service method to update the product
+        return productService.updateProduct(id, product); // Call the service method to update the product
     }
     
     @DeleteMapping("/{id}") // DELETE request to delete a product by ID

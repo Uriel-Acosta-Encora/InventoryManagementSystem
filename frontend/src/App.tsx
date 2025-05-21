@@ -30,7 +30,7 @@ const App: React.FC = () => { // Main component of the application
   }
   const handleSaveProduct = (product : Product) => {
     const method = product.id ? "PUT" : "POST"; // If the product has an id, update it, otherwise create a new one
-    const url = product.id ? "http://localhost:9090/products/${product.id}" : "http://localhost:9090/products";
+    const url = product.id ? `http://localhost:9090/products/${product.id}` : "http://localhost:9090/products";
     fetch(url, {
       method,
       headers:{
