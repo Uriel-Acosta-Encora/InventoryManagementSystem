@@ -25,7 +25,7 @@ public class ProductService {
         products.add(new Product(5, "MacBook", "Tecnologia", 5, 1200, "N/A", "2025-05-16", "2025-05-16"));
         products.add(new Product(6, "Monitor", "Tecnologia", 8, 300, "N/A", "2025-05-16", "2025-05-16"));
         products.add(new Product(7, "Mouse", "Tecnologia", 12, 20, "N/A", "2025-05-16", "2025-05-16"));
-        products.add(new Product(8, "Leche", "Alimentos", 30, 0.99, "2023-10-15", "2025-05-16", "2025-05-16"));
+        products.add(new Product(8, "Crema", "Alimentos", 10, 1.99, "2023-10-15", "2025-05-16", "2025-05-16"));
         products.add(new Product(9, "Aguacate", "Alimentos", 20, 1.5, "2025-06-01", "2025-05-16", "2025-05-16"));
         products.add(new Product(10, "Cloro", "Limpieza", 15, 5.99, "N/A", "2025-05-16", "2025-05-16"));
         products.add(new Product(11, "Detergente", "Limpieza", 10, 5.99, "2024-12-31", "2025-05-16", "2025-05-16"));
@@ -42,17 +42,34 @@ public class ProductService {
     }
 
     public Product addProduct(Product product){
-        product.setId(nextId++); // Set the ID of the new product
-        if(product.getExpirationDate() == null || product.getExpirationDate().trim().isEmpty()){
-            product.setExpirationDate("N/A");
-        }
+        // Search if the product already exists in the list (except stock, and id)
+        Product existing = products.stream()
+            .filter(p -> p.getName().equalsIgnoreCase(product.getName())
+                && p.getCategory().equalsIgnoreCase(product.getCategory())
+                && Double.compare(p.getPrice(), product.getPrice()) == 0
+                && p.getExpirationDate().equals(product.getExpirationDate()))
+            .findFirst()
+            .orElse(null);
+
         String now = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
-        if(product.getCreationDate() == null || product.getCreationDate().trim().isEmpty()){
-            product.setCreationDate(now);
+
+        if (existing != null) {
+            // If the product already exists, update its stock and last update date
+            existing.setStock(existing.getStock() + product.getStock());
+            existing.setLastUpdateDate(now);
+            return existing;
+        } else { // If the product does not exist, add it to the list
+            product.setId(nextId++); // Set the ID of the new product
+            if(product.getExpirationDate() == null || product.getExpirationDate().trim().isEmpty()){
+                product.setExpirationDate("N/A");
+            }
+            if(product.getCreationDate() == null || product.getCreationDate().trim().isEmpty()){
+                product.setCreationDate(now);
+            }
+            product.setLastUpdateDate(now); // Set last update date to now
+            products.add(product); // Add product to the list
+            return product; // Return only the added product
         }
-        product.setLastUpdateDate(now); // Set last update date to now
-        products.add(product); // Add product to the list
-        return product; // Return only the addded product
     }
 
     public Product updateProduct(int id, Product updatedProduct){
