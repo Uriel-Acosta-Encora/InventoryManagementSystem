@@ -49,15 +49,15 @@ const ProductList: React.FC<ProductListProps> = ({ products, appliedFilters, onE
 
   return (
     <div>
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+      <table>
         <thead>
           <tr>
             <th></th>
             <th>Category</th>
             <th>Name</th>
             <th>Price</th>
-            <th>Stock</th>
             <th>Expiration Date</th>
+            <th>Stock</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -91,7 +91,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, appliedFilters, onE
               <td>{product.expirationDate}</td>
               <td>{product.stock}</td>
               <td>
-                <button onClick={() => onEdit(product)} style={{ marginRight: 8 }}>Edit</button>
+                <button onClick={() => onEdit(product)}>Edit</button>
                 <button onClick={() => onDelete(product.id)}>Delete</button>
               </td>
             </tr>
@@ -107,7 +107,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, appliedFilters, onE
           Previous
         </button>
         <span style={{ margin: '0 8px' }}>
-          Page {currentPage} de {totalPages}
+          Page {currentPage} of {totalPages}
         </span>
         <button
           onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
