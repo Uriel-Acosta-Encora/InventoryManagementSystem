@@ -3,6 +3,7 @@ import ProductModal from './components/ProductModal';
 import { Product } from './models/Product';
 import ProductFilter from './components/ProductFilter';
 import ProductList from './components/ProductPagination';
+import InventoryMetrics from './components/ProductMetrics';
 
 const App: React.FC = () => { // Main component of the application
   const [
@@ -94,6 +95,8 @@ const App: React.FC = () => { // Main component of the application
         onDelete={handleDeleteProduct}
         onRefresh={fetchProducts}
       />
+      <h2>Inventory Metrics</h2>
+      <InventoryMetrics products={products} />
     </div>
   )
 };
