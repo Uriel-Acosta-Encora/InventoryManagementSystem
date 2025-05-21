@@ -49,51 +49,71 @@ const ProductList: React.FC<ProductListProps> = ({ products, appliedFilters, onE
 
   return (
     <div>
-      <ul>
-        {paginatedProducts.map((product) => (
-          <li key={product.id}>
-            <input type="checkbox" 
-            onChange={() => {
-                if (product.stock > 0){
-                    // Set stock to 0
-                    fetch(`http://localhost:9090/products/${product.id}/outofstock`, {
-                    method: "POST",
-                    })
-                    .then(() => onRefresh())
-                    .catch((error) => console.error('Error al poner en out of stock:', error));
-                } else{
-                    // Set stock to 10
-                    fetch(`http://localhost:9090/products/${product.id}/instock`, {
-                    method: "PUT",
-                    })
-                    .then(() => onRefresh())
-                    .catch((error) => console.error('Error al restaurar stock:', error));
-                }
-            }}
-            style={{ marginRight: 8 }}
-            />
-            {product.name} - {product.category} - {product.stock} - {product.price} - {product.expirationDate}
-            <button onClick={() => onEdit(product)}>Edit</button>
-            <button onClick={() => onDelete(product.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Category</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Expiration Date</th>
+            <th>Stock</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {paginatedProducts.map((product) => (
+            <tr key={product.id}>
+              <td style={{ textAlign: 'center' }}>
+                <input type="checkbox" 
+                  onChange={() => {
+                    if (product.stock > 0){
+                      // Set stock to 0
+                      fetch(`http://localhost:9090/products/${product.id}/outofstock`, {
+                        method: "POST",
+                      })
+                        .then(() => onRefresh())
+                        .catch((error) => console.error('Error putting out of stock:', error));
+                    } else{
+                      // Set stock to 10
+                      fetch(`http://localhost:9090/products/${product.id}/instock`, {
+                        method: "PUT",
+                      })
+                        .then(() => onRefresh())
+                        .catch((error) => console.error('Error on stock:', error));
+                      }
+                  }}
+                />
+              </td>
+              <td>{product.category}</td>
+              <td>{product.name}</td>
+              <td>${product.price.toFixed(2)}</td>
+              <td>{product.expirationDate}</td>
+              <td>{product.stock}</td>
+              <td>
+                <button onClick={() => onEdit(product)}>Edit</button>
+                <button onClick={() => onDelete(product.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
       {/* Pagination bar */}
       <div style={{ marginTop: 16 }}>
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
         >
-            Previous
+          Previous
         </button>
         <span style={{ margin: '0 8px' }}>
-            Page {currentPage} de {totalPages}
+          Page {currentPage} of {totalPages}
         </span>
         <button
           onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
           disabled={currentPage === totalPages || totalPages === 0}
         >
-            Next
+          Next
         </button>
       </div>
     </div>
