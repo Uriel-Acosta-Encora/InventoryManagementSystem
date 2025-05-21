@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter; // Import DateTimeFormatter
 public class ProductService {
     // Dummy list of products, in memory storage
     private final List<Product> products = new ArrayList<>();
-    private int nextId = 6; // Next ID for new products
+    private int nextId; // Next ID for new products
 
     public ProductService(){
         // Dummy data
@@ -33,6 +33,8 @@ public class ProductService {
         products.add(new Product(13, "Silla", "Muebles", 2, 150.99, "N/A", "2025-05-16", "2025-05-16"));
         products.add(new Product(14, "Mesa", "Muebles", 2, 250.99, "N/A", "2025-05-16", "2025-05-16"));
         products.add(new Product(15, "Cama", "Muebles", 2, 500.99, "N/A", "2025-05-16", "2025-05-16"));
+        int maxId = products.stream().mapToInt(Product::getId).max().orElse(0);
+        nextId = maxId + 1; // Set next ID to max ID + 1
     }
 
     public List<Product> getAllProducts(){ // Return all elements in the list
