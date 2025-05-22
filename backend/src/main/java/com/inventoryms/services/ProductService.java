@@ -2,11 +2,14 @@ package com.inventoryms.services;
 
 import org.springframework.stereotype.Service; // Set as a Service
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.inventoryms.models.Product; // Import Product Model
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter; // Import DateTimeFormatter
 
@@ -18,21 +21,16 @@ public class ProductService {
 
     public ProductService(){
         // Dummy data
-        products.add(new Product(1,"Pan", "Alimentos", 20, 1.5, "2025-06-01", "2025-05-16", "2025-05-16"));
-        products.add(new Product(2, "Jabon", "Limpieza", 15, 3.99, "N/A", "2025-05-16", "2025-05-16"));
-        products.add(new Product(3, "Detergente", "Limpieza", 10, 5.99, "2024-12-31", "2025-05-16", "2025-05-16"));
-        products.add(new Product(4, "Leche", "Alimentos", 30, 0.99, "2023-10-15", "2025-05-16", "2025-05-16"));
-        products.add(new Product(5, "MacBook", "Tecnologia", 5, 1200, "N/A", "2025-05-16", "2025-05-16"));
-        products.add(new Product(6, "Monitor", "Tecnologia", 8, 300, "N/A", "2025-05-16", "2025-05-16"));
-        products.add(new Product(7, "Mouse", "Tecnologia", 12, 20, "N/A", "2025-05-16", "2025-05-16"));
-        products.add(new Product(8, "Crema", "Alimentos", 10, 1.99, "2023-10-15", "2025-05-16", "2025-05-16"));
-        products.add(new Product(9, "Aguacate", "Alimentos", 20, 1.5, "2025-06-01", "2025-05-16", "2025-05-16"));
-        products.add(new Product(10, "Cloro", "Limpieza", 15, 5.99, "N/A", "2025-05-16", "2025-05-16"));
-        products.add(new Product(11, "Detergente", "Limpieza", 10, 5.99, "2024-12-31", "2025-05-16", "2025-05-16"));
-        products.add(new Product(12, "Cobija", "Blancos", 5, 25.99, "N/A", "2025-05-16", "2025-05-16"));
-        products.add(new Product(13, "Silla", "Muebles", 2, 150.99, "N/A", "2025-05-16", "2025-05-16"));
-        products.add(new Product(14, "Mesa", "Muebles", 2, 250.99, "N/A", "2025-05-16", "2025-05-16"));
-        products.add(new Product(15, "Cama", "Muebles", 2, 500.99, "N/A", "2025-05-16", "2025-05-16"));
+        // Load products from JSON file
+        ObjectMapper mapper = new ObjectMapper();
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream("products.json")) {
+            if (is != null) {
+                List<Product> loadedProducts = mapper.readValue(is, new TypeReference<List<Product>>() {});
+                products.addAll(loadedProducts);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load products from JSON", e);
+        }
         int maxId = products.stream().mapToInt(Product::getId).max().orElse(0);
         nextId = maxId + 1; // Set next ID to max ID + 1
     }
