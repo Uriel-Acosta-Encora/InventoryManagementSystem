@@ -1,6 +1,5 @@
 import React from "react";
 import { Product } from "../models/Product";
-import { disconnect } from "process";
 
 interface ProductMetricsProps {
     products: Product[];
@@ -24,12 +23,6 @@ const InventoryMetrics: React.FC<ProductMetricsProps> = ({ products }) => {
 
     return (
         <div>
-            <div>
-                <strong>Total Stock</strong> {totalStock} <br />
-                <strong>Total Inventory Value</strong> ${totalValue.toFixed(2)} <br />
-                <strong>Average Price</strong> ${avgPrice.toFixed(2)} <br />
-            </div>
-            <h3>Metrics by Category</h3>
             <table>
                 <thead>
                     <tr>
@@ -48,6 +41,12 @@ const InventoryMetrics: React.FC<ProductMetricsProps> = ({ products }) => {
                             <td>${m.avgPrice.toFixed(2)}</td>
                         </tr>
                     ))}
+                    <tr key="overall">
+                        <td><strong>Overall</strong></td>
+                        <td><strong>{totalStock}</strong></td>
+                        <td><strong>${totalValue.toFixed(2)}</strong></td>
+                        <td><strong>${avgPrice.toFixed(2)}</strong></td>
+                    </tr>
                 </tbody>
             </table>
         </div>

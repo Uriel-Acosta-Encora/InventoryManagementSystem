@@ -41,12 +41,29 @@ const ProductList: React.FC<ProductListProps> = ({ products, appliedFilters, onE
   const { sortedData, handleSort, getSortArrow } = useMultiSort(filteredProducts);
     // Pagination calculation
   const totalPages = Math.ceil(sortedData.length / itemsPerPage);
-const paginatedProducts = sortedData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const paginatedProducts = sortedData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   // Reset current page when filters change
   React.useEffect(() => {
     setCurrentPage(1);
   }, [appliedFilters]);
+  // Helper to show the pagination pages
+
+  const getPageNumbers = () => {
+    const pages: (number | string)[] = [];
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      if (currentPage > 4) pages.push('...');
+      for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+        pages.push(i);
+      }
+      if (currentPage < totalPages - 3) pages.push('...');
+      pages.push(totalPages);
+    }
+    return pages;
+  };
 
   return (
     <div>
@@ -110,21 +127,32 @@ const paginatedProducts = sortedData.slice((currentPage - 1) * itemsPerPage, cur
         </tbody>
       </table>
       {/* Pagination bar */}
-      <div style={{ marginTop: 16 }}>
+      <div >
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
         >
-          Previous
+          {'<'}
         </button>
-        <span style={{ margin: '0 8px' }}>
-          Page {currentPage} of {totalPages}
-        </span>
+        {getPageNumbers().map((page, idx) =>
+          page === '...' ? (
+            <span key={idx}>...</span>
+          ) : (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(Number(page))}
+              
+              disabled={currentPage === page}
+            >
+              {page}
+            </button>
+          )
+        )}
         <button
           onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
           disabled={currentPage === totalPages || totalPages === 0}
         >
-          Next
+          {'>'}
         </button>
       </div>
     </div>
