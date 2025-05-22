@@ -53,6 +53,9 @@ public class ProductService {
 
         String now = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
 
+        if (product.getName().length() > 120) {
+            throw new IllegalArgumentException("Name must be at most 120 characters.");
+        }
         if (existing != null) {
             // If the product already exists, update its stock and last update date
             existing.setStock(existing.getStock() + product.getStock());
@@ -73,6 +76,9 @@ public class ProductService {
     }
 
     public Product updateProduct(int id, Product updatedProduct){
+        if (updatedProduct.getName().length() > 120) {
+            throw new IllegalArgumentException("Name must be at most 120 characters.");
+        }
         for (int i=0; i<products.size(); i++){
             if(products.get(i).getId() == id){
                 updatedProduct.setId(id); // Set the ID of the updated product
