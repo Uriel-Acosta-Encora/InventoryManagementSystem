@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Product } from '../models/Product';
+import { useMultiSort } from '../hooks/useMultiSort';
 
 interface ProductListProps {
   products: Product[];
@@ -37,10 +38,10 @@ const ProductList: React.FC<ProductListProps> = ({ products, appliedFilters, onE
     }
     return matchesName && matchesCategory && matchesStock;
   });
-
+  const { sortedData, handleSort, getSortArrow } = useMultiSort(filteredProducts);
     // Pagination calculation
-  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-  const paginatedProducts = filteredProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const totalPages = Math.ceil(sortedData.length / itemsPerPage);
+const paginatedProducts = sortedData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   // Reset current page when filters change
   React.useEffect(() => {
@@ -53,11 +54,21 @@ const ProductList: React.FC<ProductListProps> = ({ products, appliedFilters, onE
         <thead>
           <tr>
             <th></th>
-            <th>Category</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Expiration Date</th>
-            <th>Stock</th>
+            <th style={{ cursor: 'pointer' }} onClick={() => handleSort('category')}>
+              Category {getSortArrow('category')}
+            </th>
+            <th style={{ cursor: 'pointer' }} onClick={() => handleSort('name')}>
+              Name {getSortArrow('name')}
+            </th>
+            <th style={{ cursor: 'pointer' }} onClick={() => handleSort('price')}>
+              Price {getSortArrow('price')}
+            </th>
+            <th style={{ cursor: 'pointer' }} onClick={() => handleSort('expirationDate')}>
+              Expiration Date {getSortArrow('expirationDate')}
+            </th>
+            <th style={{ cursor: 'pointer' }} onClick={() => handleSort('stock')}>
+              Stock {getSortArrow('stock')}
+            </th>
             <th>Actions</th>
           </tr>
         </thead>

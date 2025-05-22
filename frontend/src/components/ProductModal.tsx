@@ -34,6 +34,7 @@ const ProductModal: React.FC<ProductModalProps> = ({isOpen, onClose, onSave, pro
     const validate = () => {
         const newErrors: {[key: string]: string} = {};
         if (!product.name.trim()) newErrors.name = "Name is required";
+        if (product.name.length > 120) newErrors.name = "Name must be 120 characters or less";
         if (!product.category.trim()) newErrors.category = "Category is required";
         if (product.stock < 0 ) newErrors.stock = "Stock can not be negative" ;
         if (product.price < 0) newErrors.price = "Price can not be negative";
