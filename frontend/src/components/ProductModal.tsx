@@ -97,19 +97,34 @@ const ProductModal: React.FC<ProductModalProps> = ({isOpen, onClose, onSave, pro
                 <h2>{productProp ? "Edit Product" : "Create Product"}</h2>
                 <form onSubmit={handleSubmit}>
 
-                    <input name = "name" placeholder="Name" value={product.name} onChange={handleChange}/>
+                    <div className="modal-row">
+                        <label htmlFor="name">Name</label>
+                        <input id="name" name="name" placeholder="Name" value={product.name} onChange={handleChange}/>
+                    </div>
                     {errors.name && <span className="modal-error">{errors.name}</span>}
 
-                    <input name = "category" placeholder="Category" value={product.category} onChange={handleChange}/>
+                    <div className="modal-row">
+                        <label htmlFor="category">Category</label>
+                        <input id="category" name="category" placeholder="Category" value={product.category} onChange={handleChange}/>
+                    </div>
                     {errors.category && <span className="modal-error">{errors.category}</span>}
 
-                    <input type = "number" name = "stock" placeholder="Stock Units" value={product.stock} onChange={handleChange}/>
+                    <div className="modal-row">
+                        <label htmlFor="stock">Stock</label>
+                        <input id="stock" type="number" name="stock" placeholder="Stock Units" value={product.stock} onChange={handleChange}/>
+                    </div>
                     {errors.stock && <span className="modal-error">{errors.stock}</span>}
 
-                    <input type = "number" name = "price" placeholder="Price" value={product.price} onChange={handleChange}/>
+                    <div className="modal-row">
+                        <label htmlFor="price">Unit Price</label>
+                        <input id="price" type="number" name="price" placeholder="Price" value={product.price} onChange={handleChange}/>
+                    </div>
                     {errors.price && <span className="modal-error">{errors.price}</span>}
 
-                    <input type = "date" name = "expirationDate" value={product.expirationDate} onChange={handleChange}/>
+                    <div className="modal-row">
+                        <label htmlFor="expirationDate">Expiration Date</label>
+                        <input id="expirationDate" type="date" name="expirationDate" value={product.expirationDate} onChange={handleChange}/>
+                    </div>
                     {errors.expirationDate && <span className="modal-error">{errors.expirationDate}</span>}
                     <div className="modal-actions">
                         <button type="submit" >Save</button>
