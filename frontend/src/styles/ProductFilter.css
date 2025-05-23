@@ -2,7 +2,7 @@
   border: 1.5px solid #b0b0b0;
   padding: 14px 14px;
   border-radius: 14px;
-  max-width: 440px; /* Antes: 340px */
+  max-width: 440px;
   margin: 32px auto;
   background: #f7fafd;
   box-shadow: 0 2px 10px rgba(60, 60, 60, 0.06);
@@ -11,13 +11,13 @@
   gap: 10px;
   width: 100%;
   box-sizing: border-box;
-  align-items: flex-start; /* Alinea todo a la izquierda */
+  align-items: flex-start;
 }
 
 
 .pf-row {
   display: flex;
-  align-items: flex-start; /* Alinea arriba y a la izquierda */
+  align-items: flex-start;
   gap: 8px;
   margin-bottom: 4px;
   width: 100%;
@@ -70,7 +70,6 @@
   font-size: 14px;
   color: #000000;
   cursor: pointer;
-  transition: background 0.2s, border 0.2s;
   font-weight: 500;
 }
 
