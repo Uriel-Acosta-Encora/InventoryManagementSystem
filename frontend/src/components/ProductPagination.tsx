@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Product } from '../models/Product';
 import { useMultiSort } from '../hooks/useMultiSort';
+import '../styles/ProductPagination.css';
 
 interface ProductListProps {
   products: Product[];
@@ -67,23 +68,23 @@ const ProductList: React.FC<ProductListProps> = ({ products, appliedFilters, onE
 
   return (
     <div>
-      <table>
+      <table className="product-table">
         <thead>
           <tr>
             <th></th>
-            <th style={{ cursor: 'pointer' }} onClick={() => handleSort('category')}>
+            <th onClick={() => handleSort('category')}>
               Category {getSortArrow('category')}
             </th>
-            <th style={{ cursor: 'pointer' }} onClick={() => handleSort('name')}>
+            <th onClick={() => handleSort('name')}>
               Name {getSortArrow('name')}
             </th>
-            <th style={{ cursor: 'pointer' }} onClick={() => handleSort('price')}>
+            <th onClick={() => handleSort('price')}>
               Price {getSortArrow('price')}
             </th>
-            <th style={{ cursor: 'pointer' }} onClick={() => handleSort('expirationDate')}>
+            <th onClick={() => handleSort('expirationDate')}>
               Expiration Date {getSortArrow('expirationDate')}
             </th>
-            <th style={{ cursor: 'pointer' }} onClick={() => handleSort('stock')}>
+            <th onClick={() => handleSort('stock')}>
               Stock {getSortArrow('stock')}
             </th>
             <th>Actions</th>
@@ -93,7 +94,8 @@ const ProductList: React.FC<ProductListProps> = ({ products, appliedFilters, onE
           {paginatedProducts.map((product) => (
             <tr key={product.id}>
               <td style={{ textAlign: 'center' }}>
-                <input type="checkbox" 
+                <input type="checkbox"
+                  className="product-checkbox" 
                   onChange={() => {
                     if (product.stock > 0){
                       // Set stock to 0
@@ -127,8 +129,9 @@ const ProductList: React.FC<ProductListProps> = ({ products, appliedFilters, onE
         </tbody>
       </table>
       {/* Pagination bar */}
-      <div >
+      <div className="pagination-bar">
         <button
+          className="pagination-btn"
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
         >
@@ -136,10 +139,11 @@ const ProductList: React.FC<ProductListProps> = ({ products, appliedFilters, onE
         </button>
         {getPageNumbers().map((page, idx) =>
           page === '...' ? (
-            <span key={idx}>...</span>
+            <span key={idx} className="pagination-ellipsis">...</span>
           ) : (
             <button
               key={page}
+              className={`pagination-btn${currentPage === page ? ' active' : ''}`}
               onClick={() => setCurrentPage(Number(page))}
               
               disabled={currentPage === page}
@@ -149,6 +153,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, appliedFilters, onE
           )
         )}
         <button
+          className="pagination-btn"
           onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
           disabled={currentPage === totalPages || totalPages === 0}
         >

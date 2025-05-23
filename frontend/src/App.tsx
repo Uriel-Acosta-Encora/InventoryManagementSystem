@@ -4,6 +4,7 @@ import { Product } from './models/Product';
 import ProductFilter from './components/ProductFilter';
 import ProductList from './components/ProductPagination';
 import InventoryMetrics from './components/ProductMetrics';
+import './App.css';
 
 const App: React.FC = () => { // Main component of the application
   const [
@@ -67,34 +68,34 @@ const App: React.FC = () => { // Main component of the application
   return (
     <div className="App">
       <h1>Inventory Management System</h1>
-      <ProductFilter
-        filters={filters}
-        categories={categories}
-        onChange={setFilters}
-        onSearch={() => setAppliedFilters({ ...filters })}
-        onClear={() => {
-          setFilters(initialFilters);
-          setAppliedFilters(initialFilters);
-        }}
-      />
-      <button onClick={() => setIsModalOpen(true)}>Add Product</button>
-      <ProductModal
-        isOpen={isModalOpen}
-        onClose={() => {
-          setIsModalOpen(false);
-          setEditingProduct(null); 
-        }}
-        onSave={handleSaveProduct}
-        product={editingProduct} // Pass the product to be edited
-      />
-      <h2>Product List</h2>
-      <ProductList
-        products={products}
-        appliedFilters={appliedFilters}
-        onEdit={handleEditProduct}
-        onDelete={handleDeleteProduct}
-        onRefresh={fetchProducts}
-      />
+        <ProductFilter
+          filters={filters}
+          categories={categories}
+          onChange={setFilters}
+          onSearch={() => setAppliedFilters({ ...filters })}
+          onClear={() => {
+            setFilters(initialFilters);
+            setAppliedFilters(initialFilters);
+          }}
+        />
+        <button onClick={() => setIsModalOpen(true)}>Add Product</button>
+        <ProductModal
+          isOpen={isModalOpen}
+          onClose={() => {
+            setIsModalOpen(false);
+            setEditingProduct(null); 
+          }}
+          onSave={handleSaveProduct}
+          product={editingProduct} // Pass the product to be edited
+        />
+        <h2>Product List</h2>
+        <ProductList
+          products={products}
+          appliedFilters={appliedFilters}
+          onEdit={handleEditProduct}
+          onDelete={handleDeleteProduct}
+          onRefresh={fetchProducts}
+        />
       <h2>Inventory Metrics</h2>
       <InventoryMetrics products={products} />
     </div>

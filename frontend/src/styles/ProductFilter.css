@@ -8,8 +8,24 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
 }
-
+@media (max-width: 700px) {
+  .pf-container {
+    padding: 12px;
+    max-width: 100vw;
+  }
+  .pf-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .pf-label {
+    width: 100%;
+    margin-bottom: 2px;
+  }
+}
 .pf-row {
   display: flex;
   align-items: center;
