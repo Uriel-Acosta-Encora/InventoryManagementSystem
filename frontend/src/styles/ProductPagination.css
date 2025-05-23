@@ -90,3 +90,23 @@
   padding: 0 6px;
   color: #888;
 }
+
+.product-table tr.expiry-red > td {
+  background: #ffeaea !important;
+}
+.product-table tr.expiry-yellow > td {
+  background: #fffbe0 !important;
+}
+.product-table tr.expiry-green > td {
+  background: #eaffea !important;
+}
+.product-table td.stock-red {
+  background: #ffeaea !important;
+}
+.product-table td.stock-orange {
+  background: #fffbe0 !important;
+}
+.strike {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
