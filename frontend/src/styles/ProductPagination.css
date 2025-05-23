@@ -92,16 +92,21 @@
 }
 
 .product-table tr.expiry-red > td {
-  background: #ffeaea !important;
+  background: #ffeaea;
 }
 .product-table tr.expiry-yellow > td {
-  background: #fffbe0 !important;
+  background: #fffbe0;
 }
 .product-table tr.expiry-green > td {
-  background: #eaffea !important;
+  background: #eaffea;
 }
 .product-table td.stock-red {
   background: #ffeaea !important;
+}
+.product-table tr.expiry-red > td:nth-child(6):not(.stock-red):not(.stock-orange),
+.product-table tr.expiry-yellow > td:nth-child(6):not(.stock-red):not(.stock-orange),
+.product-table tr.expiry-green > td:nth-child(6):not(.stock-red):not(.stock-orange) {
+  background: #fff !important;
 }
 .product-table td.stock-orange {
   background: #fffbe0 !important;
