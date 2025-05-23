@@ -1,5 +1,6 @@
 import React from "react";
 import { Product } from "../models/Product";
+import "../styles/ProductMetrics.css";
 
 interface ProductMetricsProps {
     products: Product[];
@@ -22,8 +23,8 @@ const InventoryMetrics: React.FC<ProductMetricsProps> = ({ products }) => {
     });
 
     return (
-        <div>
-            <table>
+        <div className="metrics-container">
+            <table className="metrics-table">
                 <thead>
                     <tr>
                         <th>Category</th>
