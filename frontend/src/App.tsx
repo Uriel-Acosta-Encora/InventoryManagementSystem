@@ -78,7 +78,9 @@ const App: React.FC = () => { // Main component of the application
             setAppliedFilters(initialFilters);
           }}
         />
-        <button onClick={() => setIsModalOpen(true)}>Add Product</button>
+        <div className="add-product-wrapper">
+          <button className="add-product-btn" onClick={() => setIsModalOpen(true)}>Add Product</button>
+        </div>
         <ProductModal
           isOpen={isModalOpen}
           onClose={() => {

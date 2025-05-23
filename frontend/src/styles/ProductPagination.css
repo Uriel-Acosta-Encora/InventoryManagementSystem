@@ -1,28 +1,23 @@
 .product-table {
   width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 24px;
+  border-collapse: collapse; /* Quita los espacios entre celdas */
+  margin-bottom: 0;
   background: #fff;
-  width: 100%;
   overflow-x: auto;
-  display: block;
+
 }
 
-@media (max-width: 700px) {
-  .product-table th, .product-table td {
-    font-size: 14px;
-    padding: 6px;
-  }
-}
 .product-table th, .product-table td {
-  border: 1px solid #888;
+  border: 1px solid #b0b0b0;
   padding: 8px;
   text-align: left;
+  /* Sin margen ni padding extra */
 }
 
 .product-table th {
-  background: #d3d3d3;
+  background: #ededed;
   font-weight: bold;
+  color: #222;
   cursor: pointer;
 }
 
@@ -34,6 +29,7 @@
 
 .product-table td {
   background: #fff;
+  color: #222;
 }
 
 .product-table td:last-child {
@@ -55,22 +51,43 @@
 }
 
 .pagination-btn {
-  border: 1px solid #888;
-  background: #fff;
+  border: 1px solid #b0b0b0;
+  background: #fafbfc;
   padding: 4px 10px;
   margin: 0 2px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
+  color: #222;
+}
+.pagination-btn.active {
+  background: #ededed;
+  border-color: #888;
+  color: #111;
+  font-weight: bold;
+  pointer-events: none;
 }
 
-.pagination-btn:disabled,
-.pagination-btn.active {
-  background: #d3d3d3;
-  font-weight: bold;
-  cursor: default;
+.product-table th,
+.product-table td {
+  text-align: center;
+}
+.product-table th:nth-child(2),
+.product-table td:nth-child(2),
+.product-table th:nth-child(3),
+.product-table td:nth-child(3){
+  text-align: left;
+}
+.product-table td:last-child > *:not(:last-child) {
+  margin-right: 8px;
+}
+
+.product-table td:last-child > * {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .pagination-ellipsis {
   padding: 0 6px;
+  color: #888;
 }

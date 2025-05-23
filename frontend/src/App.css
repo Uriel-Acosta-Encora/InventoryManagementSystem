@@ -7,11 +7,54 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: #f5f5f5;
   min-height: 100vh;
+  color: #222;
 }
 
 .App {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 16px;
+  max-width: 1100px;
+  margin: 32px auto 0 auto;
+  padding: 24px 20px;
+  background: #fff;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(60,60,60,0.06);
   box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #111;
+  margin-top: 0;
+  margin-bottom: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 700px) {
+  .App {
+    padding: 10px 2vw;
+    max-width: 98vw;
+  }
+}
+.add-product-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 8px 0 24px 0; /* Menor margen superior */
+  padding-left: 0;       /* Asegura que no haya padding lateral */
+}
+
+.add-product-btn {
+  padding: 8px 18px;
+  font-size: 15px;
+  border: 1px solid #b0b0b0;
+  border-radius: 6px;
+  background: #fafbfc;
+  color: #222;
+  font-weight: 500;
+  cursor: pointer;
+}
+.add-product-btn:hover {
+  background: #ededed;
+  border-color: #888;
 }
