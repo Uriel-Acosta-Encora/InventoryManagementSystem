@@ -1,0 +1,53 @@
+.metrics-container {
+  border: 2px solid #222;
+  border-radius: 4px;
+  padding: 24px 12px;
+  background: #fff;
+  margin: 24px 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.metrics-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+}
+
+.metrics-table th,
+.metrics-table td {
+  text-align: center;
+  padding: 12px 8px;
+  border: none;
+  font-size: 1.1em;
+}
+
+.metrics-table th {
+  font-weight: bold;
+  font-size: 1.15em;
+  padding-bottom: 18px;
+}
+
+.metrics-table td:first-child,
+.metrics-table th:first-child {
+  text-align: left;
+  padding-left: 24px;
+}
+
+.metrics-table td strong {
+  font-weight: bold;
+}
+
+.metrics-table tr:last-child td {
+  border-top: 2px solid transparent;
+}
+
+.metrics-table tr td:first-child,
+.metrics-table tr th:first-child {
+  font-weight: bold;
+}
+
+.metrics-table tr:last-child td {
+  font-weight: bold;
+}

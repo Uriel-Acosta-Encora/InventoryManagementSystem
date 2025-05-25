@@ -1,0 +1,117 @@
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0;
+  background: #fff;
+  overflow-x: auto;
+
+}
+
+.product-table th, .product-table td {
+  border: 1px solid #b0b0b0;
+  padding: 8px;
+  text-align: left;
+}
+
+.product-table th {
+  background: #ededed;
+  font-weight: bold;
+  color: #222;
+  cursor: pointer;
+}
+
+.product-table th:first-child,
+.product-table td:first-child {
+  text-align: center;
+  width: 40px;
+}
+
+.product-table td {
+  background: #fff;
+  color: #222;
+}
+
+.product-table td:last-child {
+  white-space: nowrap;
+}
+
+.product-checkbox {
+  width: 18px;
+  height: 18px;
+}
+
+.pagination-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin-top: 16px;
+  font-size: 18px;
+}
+
+.pagination-btn {
+  border: 1px solid #b0b0b0;
+  background: #fafbfc;
+  padding: 4px 10px;
+  margin: 0 2px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #222;
+}
+.pagination-btn.active {
+  background: #ededed;
+  border-color: #888;
+  color: #111;
+  font-weight: bold;
+  pointer-events: none;
+}
+
+.product-table th,
+.product-table td {
+  text-align: center;
+}
+.product-table th:nth-child(2),
+.product-table td:nth-child(2),
+.product-table th:nth-child(3),
+.product-table td:nth-child(3){
+  text-align: left;
+}
+.product-table td:last-child > *:not(:last-child) {
+  margin-right: 8px;
+}
+
+.product-table td:last-child > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.pagination-ellipsis {
+  padding: 0 6px;
+  color: #888;
+}
+
+.product-table tr.expiry-red > td {
+  background: #ffeaea;
+}
+.product-table tr.expiry-yellow > td {
+  background: #fffbe0;
+}
+.product-table tr.expiry-green > td {
+  background: #eaffea;
+}
+.product-table td.stock-red {
+  background: #ffeaea !important;
+}
+.product-table tr.expiry-red > td:nth-child(6):not(.stock-red):not(.stock-orange),
+.product-table tr.expiry-yellow > td:nth-child(6):not(.stock-red):not(.stock-orange),
+.product-table tr.expiry-green > td:nth-child(6):not(.stock-red):not(.stock-orange) {
+  background: #fff !important;
+}
+.product-table td.stock-orange {
+  background: #fffbe0 !important;
+}
+.strike {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
