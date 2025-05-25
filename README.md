@@ -71,7 +71,7 @@ The backend exposes the following main endpoints:
 
 # Endpoints
 
-- **Get page of products, sorted by category, order and filtered.** 
+- **Get all products.** 
 ```
   GET /products
 ```
