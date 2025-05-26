@@ -5,10 +5,10 @@ import { Product } from "../models/Product";
 
 describe("InventoryMetrics", () => {
   const products: Product[] = [
-    { id: 1, name: "TV", category: "Electronics", price: 1000, stock: 5 },
-    { id: 2, name: "Laptop", category: "Electronics", price: 2000, stock: 2 },
-    { id: 3, name: "Book", category: "Books", price: 20, stock: 10 },
-    { id: 4, name: "Notebook", category: "Books", price: 10, stock: 0 },
+    { id: 1, name: "TV", category: "Electronics", price: 1000, stock: 5, expirationDate: "N/A" },
+    { id: 2, name: "Laptop", category: "Electronics", price: 2000, stock: 2, expirationDate: "N/A" },
+    { id: 3, name: "Book", category: "Books", price: 20, stock: 10, expirationDate: "N/A" },
+    { id: 4, name: "Notebook", category: "Books", price: 10, stock: 0, expirationDate: "N/A" },
   ];
 
   it("displays overall and category metrics correctly", () => {
